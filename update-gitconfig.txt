@@ -1,0 +1,28 @@
+Add this to the TOP of your ~/.gitconfig file (before the [user] section):
+
+[includeIf "gitdir:~/src/sowmya_mv_projects/"]
+    path = ~/.gitconfig-personal
+
+Your ~/.gitconfig should look like this:
+
+[includeIf "gitdir:~/src/sowmya_mv_projects/"]
+    path = ~/.gitconfig-personal
+[user]
+	name = sowmv
+	email = sowmv@cisco.com
+[core]
+	autocrlf = input
+	longpaths = true
+	excludesfile = /Users/sowmv/.gitignore_global
+[credential]
+	helper = osxkeychain
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[commit]
+	template = /Users/sowmv/.stCommitMsg
+[pull]
+	ff = only
