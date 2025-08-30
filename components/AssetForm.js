@@ -34,6 +34,7 @@ const AssetForm = ({ asset, onSave, onCancel }) => {
   const [ornamentType, setOrnamentType] = useState('');
   const [weight, setWeight] = useState('');
   const [count, setCount] = useState('1');
+  const [weightType, setWeightType] = useState('overall'); // 'overall' or 'per_item'
 
   useEffect(() => {
     if (asset) {
@@ -41,6 +42,7 @@ const AssetForm = ({ asset, onSave, onCancel }) => {
       setOrnamentType(asset.ornamentType || '');
       setWeight(asset.weight ? asset.weight.toString() : '');
       setCount(asset.count ? asset.count.toString() : '1');
+      setWeightType(asset.weightType || 'overall');
     }
   }, [asset]);
 
@@ -67,6 +69,7 @@ const AssetForm = ({ asset, onSave, onCancel }) => {
       ornamentType,
       count: countNum,
       weight: weightNum,
+      weightType,
     };
 
     onSave(assetData);
@@ -121,10 +124,24 @@ const AssetForm = ({ asset, onSave, onCancel }) => {
           style={styles.input}
           value={weight}
           onChangeText={setWeight}
-          placeholder="Enter weight (optional)"
+          placeholder={weightType === 'overall' ? 'Enter total weight (optional)' : 'Enter weight per item (optional)'}
           keyboardType="decimal-pad"
         />
       </View>
+
+      {weight && (
+        <View style={styles.formGroup}>
+          <Text style={styles.label}>Weight Type</Text>
+          <Picker
+            selectedValue={weightType}
+            onValueChange={setWeightType}
+            style={styles.picker}
+          >
+            <Picker.Item label="Overall weight for all items" value="overall" />
+            <Picker.Item label="Weight per individual item" value="per_item" />
+          </Picker>
+        </View>
+      )}
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.cancelButton} onPress={onCancel}>

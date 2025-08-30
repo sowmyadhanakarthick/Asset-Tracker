@@ -47,7 +47,11 @@ const AssetItem = ({ asset, onEdit, onDelete }) => {
           {asset.weight && (
             <View style={styles.detailItem}>
               <Ionicons name="barbell-outline" size={16} color="#666" />
-              <Text style={styles.detailText}>Weight: {asset.weight}g</Text>
+              <Text style={styles.detailText}>
+                Weight: {asset.weight}g 
+                {asset.weightType === 'per_item' ? ' each' : ' total'}
+                {asset.weightType === 'per_item' && ` (${(asset.weight * asset.count).toFixed(1)}g total)`}
+              </Text>
             </View>
           )}
         </View>

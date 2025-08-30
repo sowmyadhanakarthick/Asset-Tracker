@@ -104,7 +104,13 @@ export default function App() {
       }
       totals[asset.metal].count += asset.count;
       if (asset.weight) {
-        totals[asset.metal].weight += asset.weight * asset.count;
+        // Calculate total weight based on weight type
+        if (asset.weightType === 'per_item') {
+          totals[asset.metal].weight += asset.weight * asset.count;
+        } else {
+          // Default to 'overall' for backward compatibility
+          totals[asset.metal].weight += asset.weight;
+        }
       }
     });
     return totals;
@@ -122,6 +128,27 @@ export default function App() {
       </TouchableOpacity>
     </View>
   );
+
+  const renderTotalWeights = () => {
+    const totals = getTotalsByMetal();
+    const metalKeys = Object.keys(totals).filter(metal => totals[metal].weight > 0);
+    
+    if (metalKeys.length === 0) return null;
+
+    return (
+      <View style={styles.totalWeightsContainer}>
+        <Text style={styles.totalWeightsTitle}>Total Weights</Text>
+        <View style={styles.totalWeightsRow}>
+          {metalKeys.map(metal => (
+            <View key={metal} style={[styles.totalWeightItem, { backgroundColor: getMetalColor(metal) }]}>
+              <Text style={styles.totalWeightMetal}>{metal.charAt(0).toUpperCase() + metal.slice(1)}</Text>
+              <Text style={styles.totalWeightValue}>{totals[metal].weight.toFixed(1)}g</Text>
+            </View>
+          ))}
+        </View>
+      </View>
+    );
+  };
 
   const renderSummary = () => {
     const totals = getTotalsByMetal();
@@ -143,6 +170,16 @@ export default function App() {
         ))}
       </View>
     );
+  };
+
+  const getMetalColor = (metal) => {
+    const colors = {
+      gold: '#FFD700',
+      silver: '#C0C0C0',
+      diamond: '#B9F2FF',
+      platinum: '#E5E4E2',
+    };
+    return colors[metal] || '#f0f0f0';
   };
 
   if (showForm) {
@@ -169,7 +206,7 @@ export default function App() {
         </TouchableOpacity>
       </View>
 
-      {assets.length > 0 && renderSummary()}
+      {assets.length > 0 && renderTotalWeights()}
 
       <FlatList
         data={assets}
@@ -219,6 +256,7 @@ const styles = StyleSheet.create({
   summaryContainer: {
     backgroundColor: '#fff',
     margin: 16,
+    marginTop: 8,
     padding: 16,
     borderRadius: 8,
     shadowColor: '#000',
@@ -250,6 +288,64 @@ const styles = StyleSheet.create({
   summaryDetails: {
     fontSize: 14,
     color: '#666',
+  },
+  totalWeightsContainer: {
+    backgroundColor: '#fff',
+    margin: 16,
+    marginBottom: 8,
+    padding: 16,
+    borderRadius: 8,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
+  },
+  totalWeightsTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 12,
+    textAlign: 'center',
+  },
+  totalWeightsRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    flexWrap: 'wrap',
+  },
+  totalWeightItem: {
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderRadius: 8,
+    marginHorizontal: 4,
+    marginVertical: 4,
+    minWidth: 80,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+    elevation: 2,
+  },
+  totalWeightMetal: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 4,
+  },
+  totalWeightValue: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#000',
+  },
+  summaryContainer: {
+    marginTop: 8,
   },
   emptyContainer: {
     flex: 1,
