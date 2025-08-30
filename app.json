@@ -4,13 +4,7 @@
     "slug": "asset-tracker",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
     "assetBundlePatterns": [
       "**/*"
     ],
@@ -18,10 +12,6 @@
       "supportsTablet": true
     },
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      },
       "package": "com.assettracker.app"
     },
     "web": {
@@ -29,7 +19,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "2bb631c1-4445-4300-8b4e-32baf1172cd1"
+        "projectId": "65e05f65-0583-40f9-9c3a-c781c562e245"
       }
     }
   }
