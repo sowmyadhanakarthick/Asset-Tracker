@@ -2,16 +2,18 @@
 
 # Asset Tracker Mobile App
 
-Built using AI code generation tools as part of my exploration into prompt engineering and AI-assisted development workflows.
-
-I provided structured prompts, iteratively refined requirements, and validated outputs to guide the AI in producing production-quality React code.
-
-Learned to balance AI-generated scaffolding with manual enhancements, ensuring code quality, performance, and clean UI/UX.
-
-Demonstrates my ability to leverage AI tools effectively while still applying senior-level frontend expertise in reviewing, debugging, and refining the generated code.
-
-
 A React Native mobile application for tracking precious assets like gold, silver, diamond, and platinum ornaments.
+
+This project was built with the help of AI code generation tools as part of my exploration into prompt engineering and AI-assisted development workflows. My role was to:
+
+Provide structured prompts to guide the AI in producing React Native components.
+
+Iteratively refine requirements and validate outputs.
+
+Enhance the generated scaffolding with manual improvements for clean UI, better UX, and reliable state management.
+
+
+This demonstrates my ability to leverage AI tools effectively while applying frontend expertise in reviewing, debugging, and refining code.
 
 ## Features
 
